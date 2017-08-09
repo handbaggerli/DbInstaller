@@ -1,0 +1,19 @@
+Convert GUI from QT Creator to Python
+in cmd:
+in: C:\ProgramData\Anaconda3\Library\bin
+
+pyuic5.bat -x D:\GitRepos\DbInstaller\GuiBuilder\DbInstaller\mainwindow.ui -o  D:\GitRepos\DbInstaller\Python\mainwindow_convert.txt
+pyuic5.bat -x D:\GitRepos\DbInstaller\GuiBuilder\DbInstaller\logindialog.ui -o  D:\GitRepos\DbInstaller\Python\logindialog_convert.txt
+
+
+
+Speziell beim Parameter übergeben.
+Wenn beim Parameter --jsonl_parameters ein Jsonline Parameter über die CMD eingegeben werden soll, muss der Text aus der Zwischenablage noch angepasst werden. 
+Die CMD betrachtet das ["] Zeichen als String und löscht diese raus. Um dies zu Umgehen, müssen alle ["] mit [\"] ersetzt werden.
+Am Schluss alles noch mit einem Hochkomma ['] umranden.
+
+Beispiel Original wie aus der Zwischenablage:
+{"svnBasePath": "D:/snv/trunk/DWH_ALLGEMEIN/SYRIUS_R3_DWH/buchfuehrung_base/bfi_akt_hist/trunk", "dbLogin-connection": "centris_dwh_entw2", "flag_tab": true, "flag_package": true, "flag_synonym": false, "dbLogin-user": "bfi925", "defines": [], "flag_sql": true, "flag_view": true, "flag_sequence": false, "flag_tab_save": true, "installationPath": "D:/install/aktHist", "dbLogin-pwd": "OVOCMcsaKYJ3tvFRkgiyFA==", "svnKndPath": "D:/snv/trunk/DWH_925_AXA/SYRIUS_R3_DWH/buchfuehrung/bfi_akt_hist/trunk"}
+
+Fertig bearbeitet um in der CMD zu übergeben:
+'{\"svnBasePath\": \"D:/snv/trunk/DWH_ALLGEMEIN/SYRIUS_R3_DWH/buchfuehrung_base/bfi_akt_hist/trunk\", \"dbLogin-connection\": \"centris_dwh_entw2\", \"flag_tab\": true, \"flag_package\": true, \"flag_synonym\": false, \"dbLogin-user\": \"bfi925\", \"defines\": [], \"flag_sql\": true, \"flag_view\": true, \"flag_sequence\": false, \"flag_tab_save\": true, \"installationPath\": \"D:/install/aktHist\", \"dbLogin-pwd\": \"OVOCMcsaKYJ3tvFRkgiyFA==\", \"svnKndPath\": \"D:/snv/trunk/DWH_925_AXA/SYRIUS_R3_DWH/buchfuehrung/bfi_akt_hist/trunk\"}'
