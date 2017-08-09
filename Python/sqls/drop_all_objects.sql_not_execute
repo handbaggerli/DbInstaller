@@ -1,0 +1,89 @@
+declare
+  cursor c_obj is
+    select object_type
+         , object_name
+         , 'drop ' || object_type || ' ' || object_name as cmd
+    from   user_objects
+    where  object_type in ('TYPE', 'FUNCTION', 'PROCEDURE', 'PACKAGE', 'SEQUENCE', 'VIEW','MATERIALIZED VIEW')
+    order by object_type, object_name;
+
+  type type_obj is table of c_obj%rowtype;
+
+  l_obj   type_obj;
+
+  cursor c_tab is
+    select table_name
+         , 'drop table ' || table_name || ' cascade constraint purge' as cmd
+    from   user_tables
+    order by table_name;
+
+  type type_tab is table of c_tab%rowtype;
+
+  l_tab   type_tab;
+begin
+  open c_obj;
+
+  fetch c_obj
+  bulk   collect into l_obj;
+
+  close c_obj;
+
+  for idx in 1 .. l_obj.count loop
+    begin
+      execute immediate l_obj (idx).cmd;
+    exception
+      when others then
+        null;
+    end;
+  end loop;
+
+  open c_obj;
+
+  fetch c_obj
+  bulk   collect into l_obj;
+
+  close c_obj;
+
+  for idx in 1 .. l_obj.count loop
+    begin
+      execute immediate l_obj (idx).cmd;
+    exception
+      when others then
+        null;
+    end;
+  end loop;
+
+  open c_tab;
+
+  fetch c_tab
+  bulk   collect into l_tab;
+
+  close c_tab;
+
+  for idx in 1 .. l_tab.count loop
+    begin
+      execute immediate l_tab (idx).cmd;
+    exception
+      when others then
+        null;
+    end;
+  end loop;
+
+  open c_tab;
+
+  fetch c_tab
+  bulk   collect into l_tab;
+
+  close c_tab;
+
+  for idx in 1 .. l_tab.count loop
+    begin
+      execute immediate l_tab (idx).cmd;
+    exception
+      when others then
+        null;
+    end;
+  end loop;
+end;
+/
+
