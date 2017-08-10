@@ -268,11 +268,11 @@ class GlobalInstaller(object):
     def cleanInstallationPath(self):
         try:
             shutil.rmtree(self.installationPath)
-            os.mkdir(self.installationPath)
+            os.makedirs(self.installationPath, exist_ok=True)
         except IOError as e:
             print(e)
             if not os.path.exists(self.installationPath):
-                os.mkdir(self.installationPath)
+                os.makedirs(self.installationPath, exist_ok=True)
 
     def cleanDatabase(self):
         drop_command_file = os.path.join(os.getcwd(), "sqls", "drop_all_objects.sql_not_execute")

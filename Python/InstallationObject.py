@@ -66,7 +66,7 @@ class InstallationObject():
     #
     def copyData2InstallationPath(self):
         text = ""
-        with open(os.path.join(self.sourcePath, self.fileNameWithExt)) as fReader:
+        with open(os.path.join(self.sourcePath, self.fileNameWithExt), encoding='iso-8859-1') as fReader:
             text = fReader.read()
         # Zeilenweise auslesen, da Reguläre Expression im Code als Replacement erkannt werden könnten.
         lines = text.split("\n")
@@ -128,7 +128,7 @@ class InstallationObject():
     #
     def __findDefinesAndReplacementsInFile(self):
         text = ""
-        with open(os.path.join(self.sourcePath, self.fileNameWithExt)) as fReader:
+        with open(os.path.join(self.sourcePath, self.fileNameWithExt), encoding='iso-8859-1') as fReader:
             text = fReader.read()
         matchDefins = re.findall(GlobalInstaller.GlobalInstaller.REGEX_DEFINE_PATTERN, text)
         matchReplacemet = re.findall(GlobalInstaller.GlobalInstaller.REGEX_VARIABLE_PATTERN, text)
