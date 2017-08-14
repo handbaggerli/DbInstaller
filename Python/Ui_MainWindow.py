@@ -615,7 +615,7 @@ class Ui_MainWindow(object):
         self.globalInstaller.setFlagSynonym(self.checkBox_Synonym.isChecked())
         self.globalInstaller.setFlagSequence(self.checkBox_Sequence.isChecked())
         self.globalInstaller.setFlagTabSave(self.checkBox_SaveTable.isChecked())
-        self.globalInstaller.setFlagTabSave(self.checkBox_Table.isChecked())
+        self.globalInstaller.setFlagTab(self.checkBox_Table.isChecked())
         self.globalInstaller.setFlagView(self.checkBox_View.isChecked())
         self.globalInstaller.setFlagPackage(self.checkBox_Package.isChecked())
         self.globalInstaller.setFlagSql(self.checkBox_Script.isChecked())
