@@ -3,6 +3,8 @@ __author__ = 'U10938'
 
 import os
 import re
+import urllib
+from chardet import UniversalDetector
 
 import GlobalInstaller
 
@@ -66,8 +68,10 @@ class InstallationObject():
     #
     def copyData2InstallationPath(self):
         text = ""
-        with open(os.path.join(self.sourcePath, self.fileNameWithExt), encoding='iso-8859-1') as fReader:
+        encoding = self.__detectEncoding()
+        with open(os.path.join(self.sourcePath, self.fileNameWithExt), encoding=encoding) as fReader:
             text = fReader.read()
+
         # Zeilenweise auslesen, da Reguläre Expression im Code als Replacement erkannt werden könnten.
         lines = text.split("\n")
         text = ""
@@ -79,8 +83,26 @@ class InstallationObject():
         text = self.__replaceDefines(text=text)
         if not os.path.exists(self.installationPath):
             os.makedirs(self.installationPath)
-        with open(os.path.join(self.installationPath, self.fileNameWithExt), "w+") as fWriter:
+        with open(os.path.join(self.installationPath, self.fileNameWithExt), mode="w+", encoding='utf-8') as fWriter:
             fWriter.write(text)
+
+    #
+    # Find the Encoding
+    #
+    def __detectEncoding(self):
+        detector = UniversalDetector()
+        detector.reset()
+        with open(os.path.join(self.sourcePath, self.fileNameWithExt), 'rb') as fReader:
+            text = fReader.readlines()
+
+        for line in text:
+            detector.feed(line)
+            if detector.done:
+                break
+        detector.close()
+        return detector.result['encoding']
+
+
 
     #
     # Defines in SQL has double .., replace it with single .
@@ -128,7 +150,8 @@ class InstallationObject():
     #
     def __findDefinesAndReplacementsInFile(self):
         text = ""
-        with open(os.path.join(self.sourcePath, self.fileNameWithExt), encoding='iso-8859-1') as fReader:
+        encoding = self.__detectEncoding()
+        with open(os.path.join(self.sourcePath, self.fileNameWithExt), encoding=encoding) as fReader:
             text = fReader.read()
         matchDefins = re.findall(GlobalInstaller.GlobalInstaller.REGEX_DEFINE_PATTERN, text)
         matchReplacemet = re.findall(GlobalInstaller.GlobalInstaller.REGEX_VARIABLE_PATTERN, text)
@@ -169,8 +192,9 @@ class InstallationObject():
                 new_key = key.replace(r"/*{", "").replace(r"}*/", "")
                 infoTextStart = " /* import von {0} */ \n".format(value)
                 infoTextEnd = "\n/* ---- ENDE IMPORT ---- */\n"
-                replaceText = ""
-                with open(value) as fReader:
-                    replaceText = fReader.read()
+                replaceText = "/* Replacement nicht vorhanden. */"
+                if os.path.exists(value):
+                    with open(value) as fReader:
+                        replaceText = fReader.read()
 
                 self.localReplacementDicData[new_key] = infoTextStart + replaceText + infoTextEnd

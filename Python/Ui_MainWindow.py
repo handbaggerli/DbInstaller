@@ -383,6 +383,7 @@ class Ui_MainWindow(object):
             "pyqt 5.6.0\n"
             "qt 5.6.2\n"
             "setuptools 27.2.0\n"
+            "chardet 3.0.4"
         )
         msg_info = QtWidgets.QMessageBox()
         msg_info.setWindowTitle("Versionshinweis")

@@ -169,22 +169,23 @@ class GlobalInstaller(object):
             json_parameter_list = fReader.readlines()
 
         for jsonl_parameters in json_parameter_list:
-            self.__loadFromJsonl(jsonl_parameters=jsonl_parameters)
-            print("DB Verbindung: {conn}".format(conn=self.dbLogin.getDisplayConnectionString()))
-            if cleanInstallationPath:
-                print("Installationspfad bereinigen: {path}".format(path=self.installationPath))
-                self.cleanInstallationPath()
-            if copy_all_data_to_installation:
-                print("Installationsobjekte ab Pfade lesen: {base_path} - {knd_path}]".format(
-                    base_path=self.svnBasePath, knd_path=self.svnKndPath))
-                self.readInstallationObjectFromPath()
-                print("Replacements ersetzen und Objekte in Installationspfad kopieren: {path}".format(
-                    path=self.installationPath))
-                self.copyAllData2InstallationPath()
-            if install_objects:
-                print("Objekte in Datenbank installieren: {conn}".format(
-                    conn=self.dbLogin.getDisplayConnectionString()))
-                self.installAllObjects2Database()
+            if not jsonl_parameters[0:1] == "#":
+                self.__loadFromJsonl(jsonl_parameters=jsonl_parameters)
+                print("DB Verbindung: {conn}".format(conn=self.dbLogin.getDisplayConnectionString()))
+                if cleanInstallationPath:
+                    print("Installationspfad bereinigen: {path}".format(path=self.installationPath))
+                    self.cleanInstallationPath()
+                if copy_all_data_to_installation:
+                    print("Installationsobjekte ab Pfade lesen: {base_path} - {knd_path}]".format(
+                        base_path=self.svnBasePath, knd_path=self.svnKndPath))
+                    self.readInstallationObjectFromPath()
+                    print("Replacements ersetzen und Objekte in Installationspfad kopieren: {path}".format(
+                        path=self.installationPath))
+                    self.copyAllData2InstallationPath()
+                if install_objects:
+                    print("Objekte in Datenbank installieren: {conn}".format(
+                        conn=self.dbLogin.getDisplayConnectionString()))
+                    self.installAllObjects2Database()
 
 
     def readInstallationObjectFromPath(self):
