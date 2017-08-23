@@ -289,29 +289,30 @@ class GlobalInstaller(object):
                 element.copyData2InstallationPath()
 
     def installAllObjects2Database(self):
+        self.buildInstallationObjectFromFileSystem()
         if self.flag_synonym:
             for element in self.getSynonymList():
-                self.installObject2Database(identification=element)
+                self.installObject2DatabaseBlind(file_name=element)
         if self.flag_sequence:
             for element in self.getSequenceList():
-                self.installObject2Database(identification=element)
+                self.installObject2DatabaseBlind(file_name=element)
         if self.flag_tab_save:
             for element in self.getTabSaveList():
-                self.installObject2Database(identification=element)
+                self.installObject2DatabaseBlind(file_name=element)
         if self.flag_tab:
             for element in self.getTabList():
-                self.installObject2Database(identification=element)
+                self.installObject2DatabaseBlind(file_name=element)
         if self.flag_view:
             for element in self.getViewList():
-                self.installObject2Database(identification=element)
+                self.installObject2DatabaseBlind(file_name=element)
         if self.flag_package:
             for element in self.getPackageHeaderList():
-                self.installObject2Database(identification=element)
+                self.installObject2DatabaseBlind(file_name=element)
             for element in self.getPackageBodyList():
-                self.installObject2Database(identification=element)
+                self.installObject2DatabaseBlind(file_name=element)
         if self.flag_sql:
             for element in self.getSqlList():
-                self.installObject2Database(identification=element)
+                self.installObject2DatabaseBlind(file_name=element)
 
         self.compileSchema()
 
@@ -329,16 +330,16 @@ class GlobalInstaller(object):
             r"dbms_utility.compile_schema(schema => user, compile_all => false, reuse_settings => true); "
             r"end;"
         )
-        try:
-            conn = ora.connect(self.dbLogin.getUserName(), self.dbLogin.getPassword(), self.dbLogin.getConnection())
-            cur = conn.cursor()
-            cur.execute(cmd)
-            conn.close()
-        except ora.DatabaseError as e:
-            error, = e.args
-            print(error.code)
-            print(error.message)
-            print(error.context)
+        with ora.connect(self.dbLogin.getUserName(), self.dbLogin.getPassword(), self.dbLogin.getConnection()) as conn:
+            try:
+                cur = conn.cursor()
+                cur.execute(cmd)
+                conn.close()
+            except ora.DatabaseError as e:
+                error, = e.args
+                print(error.code)
+                print(error.message)
+                print(error.context)
 
     def buildInstallationObjectFromFileSystem(self):
         self.__clearObjects4Installation()

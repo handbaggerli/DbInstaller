@@ -58,9 +58,9 @@ class DatabaseLogin():
     # Execute the given File in SQL Plus
     #
     def runSqlPlus(self, filename):
-        sqlplus = Popen(['sqlplus', '-S', self.getConnectionString()], stdin=PIPE, stdout=PIPE, stderr=PIPE)
-        sqlplus.stdin.write(bytes('@' + filename, "utf-8"))
-        return sqlplus.communicate()
+        with Popen(['sqlplus', '-S', self.getConnectionString()], stdin=PIPE, stdout=PIPE, stderr=PIPE) as sqlplus:
+            sqlplus.stdin.write(bytes('@' + filename, "utf-8"))
+            return sqlplus.communicate()
 
 
 from argparse import ArgumentParser
