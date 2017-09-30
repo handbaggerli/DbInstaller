@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>DB Installer</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>system-software-installer.ico</normaloff>system-software-installer.ico</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
@@ -65,6 +69,9 @@
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
             <widget class="QLineEdit" name="lineEdit_SvnBasePath">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="echoMode">
               <enum>QLineEdit::Normal</enum>
              </property>
@@ -74,13 +81,25 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_SvnKndPath"/>
+            <widget class="QLineEdit" name="lineEdit_SvnKndPath">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_InstallPath"/>
+            <widget class="QLineEdit" name="lineEdit_InstallPath">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_DbLogin"/>
+            <widget class="QLineEdit" name="lineEdit_DbLogin">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -354,6 +373,7 @@
     <addaction name="actionObjekte_Installieren"/>
     <addaction name="separator"/>
     <addaction name="actionParameter_in_Zwischenablage"/>
+    <addaction name="actionPasswort_Schl_ssel_in_Zwischenablage_kopieren"/>
    </widget>
    <widget class="QMenu" name="menuInfo">
     <property name="title">
@@ -403,6 +423,11 @@
   <action name="actionVersionshinweis">
    <property name="text">
     <string>Versionshinweis</string>
+   </property>
+  </action>
+  <action name="actionPasswort_Schl_ssel_in_Zwischenablage_kopieren">
+   <property name="text">
+    <string>Passwort in Zwischenablage kopieren</string>
    </property>
   </action>
  </widget>

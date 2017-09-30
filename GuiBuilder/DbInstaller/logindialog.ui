@@ -22,6 +22,10 @@
   <property name="windowTitle">
    <string>DB Login</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>network-connect-2.ico</normaloff>network-connect-2.ico</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
