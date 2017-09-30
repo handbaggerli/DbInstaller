@@ -103,6 +103,20 @@ class InstallationObject():
         return detector.result['encoding']
 
 
+    def __detectEncoding_file(self, filename):
+        detector = UniversalDetector()
+        detector.reset()
+        with open(filename, 'rb') as fReader:
+            text = fReader.readlines()
+
+        for line in text:
+            detector.feed(line)
+            if detector.done:
+                break
+        detector.close()
+        return detector.result['encoding']
+
+
 
     #
     # Defines in SQL has double .., replace it with single .
@@ -194,7 +208,8 @@ class InstallationObject():
                 infoTextEnd = "\n/* ---- ENDE IMPORT ---- */\n"
                 replaceText = "/* Replacement nicht vorhanden. */"
                 if os.path.exists(value):
-                    with open(value) as fReader:
+                    encoding = self.__detectEncoding_file(filename=value)
+                    with open(value, encoding=encoding) as fReader:
                         replaceText = fReader.read()
 
                 self.localReplacementDicData[new_key] = infoTextStart + replaceText + infoTextEnd

@@ -15,6 +15,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(804, 879)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("system-software-installer.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        MainWindow.setWindowIcon(icon)
         self.centralWidget = QtWidgets.QWidget(MainWindow)
         self.centralWidget.setObjectName("centralWidget")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.centralWidget)
@@ -58,17 +61,21 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setSpacing(6)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.lineEdit_SvnBasePath = QtWidgets.QLineEdit(self.groupBox)
+        self.lineEdit_SvnBasePath.setEnabled(False)
         self.lineEdit_SvnBasePath.setEchoMode(QtWidgets.QLineEdit.Normal)
         self.lineEdit_SvnBasePath.setPlaceholderText("")
         self.lineEdit_SvnBasePath.setObjectName("lineEdit_SvnBasePath")
         self.verticalLayout_2.addWidget(self.lineEdit_SvnBasePath)
         self.lineEdit_SvnKndPath = QtWidgets.QLineEdit(self.groupBox)
+        self.lineEdit_SvnKndPath.setEnabled(False)
         self.lineEdit_SvnKndPath.setObjectName("lineEdit_SvnKndPath")
         self.verticalLayout_2.addWidget(self.lineEdit_SvnKndPath)
         self.lineEdit_InstallPath = QtWidgets.QLineEdit(self.groupBox)
+        self.lineEdit_InstallPath.setEnabled(False)
         self.lineEdit_InstallPath.setObjectName("lineEdit_InstallPath")
         self.verticalLayout_2.addWidget(self.lineEdit_InstallPath)
         self.lineEdit_DbLogin = QtWidgets.QLineEdit(self.groupBox)
+        self.lineEdit_DbLogin.setEnabled(False)
         self.lineEdit_DbLogin.setObjectName("lineEdit_DbLogin")
         self.verticalLayout_2.addWidget(self.lineEdit_DbLogin)
         self.horizontalLayout.addLayout(self.verticalLayout_2)
@@ -219,6 +226,9 @@ class Ui_MainWindow(object):
         self.actionParameter_in_Zwischenablage.setObjectName("actionParameter_in_Zwischenablage")
         self.actionVersionshinweis = QtWidgets.QAction(MainWindow)
         self.actionVersionshinweis.setObjectName("actionVersionshinweis")
+        self.actionPasswort_Schl_ssel_in_Zwischenablage_kopieren = QtWidgets.QAction(MainWindow)
+        self.actionPasswort_Schl_ssel_in_Zwischenablage_kopieren.setObjectName(
+            "actionPasswort_Schl_ssel_in_Zwischenablage_kopieren")
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionExit)
         self.menuAktion.addAction(self.actionDB_Schema_Leeren)
@@ -230,6 +240,7 @@ class Ui_MainWindow(object):
         self.menuAktion.addAction(self.actionObjekte_Installieren)
         self.menuAktion.addSeparator()
         self.menuAktion.addAction(self.actionParameter_in_Zwischenablage)
+        self.menuAktion.addAction(self.actionPasswort_Schl_ssel_in_Zwischenablage_kopieren)
         self.menuInfo.addAction(self.actionVersionshinweis)
         self.menuBar.addAction(self.menuFile.menuAction())
         self.menuBar.addAction(self.menuAktion.menuAction())
@@ -268,17 +279,13 @@ class Ui_MainWindow(object):
         self.checkBox_Package.setText(_translate("MainWindow", "Packages [pks / pkb]:"))
         self.checkBox_Script.setText(_translate("MainWindow", "Scripts [sql]:"))
         self.groupBox_3.setTitle(_translate("MainWindow", "Aktionen"))
-        self.pushButton_CleanupSchema.setToolTip(_translate("MainWindow",
-                                                            "Es werden alle Datenbank Objekte ausser Synonyme im angemeldeten Schema gelöscht. "))
+        self.pushButton_CleanupSchema.setToolTip(_translate("MainWindow", "Es werden alle Datenbank Objekte ausser Synonyme im angemeldeten Schema gelöscht. "))
         self.pushButton_CleanupSchema.setText(_translate("MainWindow", "DB Schema Leeren"))
-        self.pushButton_LoadFromPath.setToolTip(
-            _translate("MainWindow", "Einlesen der Dateien von den veschiedenen Dateipfaden."))
+        self.pushButton_LoadFromPath.setToolTip(_translate("MainWindow", "Einlesen der Dateien von den veschiedenen Dateipfaden."))
         self.pushButton_LoadFromPath.setText(_translate("MainWindow", "Dateien ab Pfade Laden"))
-        self.pushButton_CleanupPath.setToolTip(
-            _translate("MainWindow", "Löscht alle Dateien im Installations Verzeichnis."))
+        self.pushButton_CleanupPath.setToolTip(_translate("MainWindow", "Löscht alle Dateien im Installations Verzeichnis."))
         self.pushButton_CleanupPath.setText(_translate("MainWindow", "Installationspfad Bereinigen"))
-        self.pushButton_CopyAndReplace.setToolTip(_translate("MainWindow",
-                                                             "<html><head/><body><p>Kopieren von allen Dateien anhand der Hirarchie von den ausgewählten SVN Pfaden in das Installationsverzeichnis. In diesem Schritt werden alle Replacements vorgenommen.</p></body></html>"))
+        self.pushButton_CopyAndReplace.setToolTip(_translate("MainWindow", "<html><head/><body><p>Kopieren von allen Dateien anhand der Hirarchie von den ausgewählten SVN Pfaden in das Installationsverzeichnis. In diesem Schritt werden alle Replacements vorgenommen.</p></body></html>"))
         self.pushButton_CopyAndReplace.setText(_translate("MainWindow", "Replacements ersetzen"))
         self.pushButton_InstallObjects.setText(_translate("MainWindow", "Objekte Installieren"))
         self.groupBox_4.setTitle(_translate("MainWindow", "Dateien Log"))
@@ -293,6 +300,7 @@ class Ui_MainWindow(object):
         self.actionObjekte_Installieren.setText(_translate("MainWindow", "Objekte Installieren"))
         self.actionParameter_in_Zwischenablage.setText(_translate("MainWindow", "Parameter in Zwischenablage kopieren"))
         self.actionVersionshinweis.setText(_translate("MainWindow", "Versionshinweis"))
+        self.actionPasswort_Schl_ssel_in_Zwischenablage_kopieren.setText(_translate("MainWindow", "Passwort in Zwischenablage kopieren"))
 
     ############################################################################################################################
 
@@ -329,6 +337,8 @@ class Ui_MainWindow(object):
         self.actionReplacments_ersetzen.triggered.connect(self.__copyAndReplace)
         self.actionParameter_in_Zwischenablage.triggered.connect(self.__copyParameter2Clipboard)
         self.actionVersionshinweis.triggered.connect(self.__versionInfo)
+        self.actionPasswort_Schl_ssel_in_Zwischenablage_kopieren.triggered.connect(self.__copyPassword2Clipboard)
+
 
     #
     # Fills in user information.
@@ -368,6 +378,13 @@ class Ui_MainWindow(object):
     def __copyParameter2Clipboard(self):
         parameter = self.globalInstaller.dupParameter2String()
         QtWidgets.QApplication.clipboard().setText(parameter)
+
+    #
+    # Copy Password to clip board
+    #
+    def __copyPassword2Clipboard(self):
+        password = self.globalInstaller.encryptInfo(self.globalInstaller.getDbLogin().getPassword())
+        QtWidgets.QApplication.clipboard().setText(password)
 
     #
     # Opens an Message Box

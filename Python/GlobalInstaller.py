@@ -334,7 +334,6 @@ class GlobalInstaller(object):
             try:
                 cur = conn.cursor()
                 cur.execute(cmd)
-                conn.close()
             except ora.DatabaseError as e:
                 error, = e.args
                 print(error.code)
@@ -374,7 +373,7 @@ class GlobalInstaller(object):
         paramDic["svnKndPath"] = self.svnKndPath
         paramDic["installationPath"] = self.installationPath
         paramDic["dbLogin-user"] = self.dbLogin.getUserName()
-        paramDic["dbLogin-pwd"] = self.__encryptInfo(self.dbLogin.getPassword())
+        paramDic["dbLogin-pwd"] = self.encryptInfo(self.dbLogin.getPassword())
         paramDic["dbLogin-connection"] = self.dbLogin.getConnection()
         paramDic["flag_synonym"] = self.flag_synonym
         paramDic["flag_sequence"] = self.flag_sequence
@@ -444,7 +443,7 @@ class GlobalInstaller(object):
                     found_list.append(os.path.join(root, file))
         found_list.sort()
 
-    def __encryptInfo(self, plain_text):
+    def encryptInfo(self, plain_text):
         # zu decodieren String muss ein mehrfaches von 16 lang sein.
         pad_len = ((len(plain_text) // 16) + 1) * 16
         start_string = plain_text.rjust(pad_len)

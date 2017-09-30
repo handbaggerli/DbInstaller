@@ -6,7 +6,9 @@ block_cipher = None
 a = Analysis(['D:\\GitRepos\\DbInstaller\\Python\\DbInstaller.py'],
              pathex=['D:\\GitRepos\\DbInstaller\\Python'],
              binaries=[],
-             datas=[('sqls/drop_all_objects.sql_not_execute','sqls')],
+             datas=[('sqls/drop_all_objects.sql_not_execute','sqls'),
+                    ('system-software-installer.ico', ''),
+                    ('network-connect-2.ico', '')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -23,7 +25,9 @@ exe = EXE(pyz,
           debug=False,
           strip=False,
           upx=True,
-          console=True )
+          console=True,
+          icon='system-software-installer.ico'
+		  )
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 #
 # Gui Function for Login Dialog.
@@ -16,6 +16,9 @@ class Ui_LoginDialog(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(LoginDialog.sizePolicy().hasHeightForWidth())
         LoginDialog.setSizePolicy(sizePolicy)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("network-connect-2.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        LoginDialog.setWindowIcon(icon)
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(LoginDialog)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
@@ -47,8 +50,10 @@ class Ui_LoginDialog(object):
         self.horizontalLayout.addLayout(self.verticalLayout_2)
         self.verticalLayout_3.addLayout(self.horizontalLayout)
         self.buttonBox = QtWidgets.QDialogButtonBox(LoginDialog)
+        self.buttonBox.setEnabled(True)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel | QtWidgets.QDialogButtonBox.Ok)
+        self.buttonBox.setCenterButtons(False)
         self.buttonBox.setObjectName("buttonBox")
         self.verticalLayout_3.addWidget(self.buttonBox)
 
@@ -63,3 +68,15 @@ class Ui_LoginDialog(object):
         self.label.setText(_translate("LoginDialog", "Username:"))
         self.label_2.setText(_translate("LoginDialog", "Password:"))
         self.label_3.setText(_translate("LoginDialog", "DB Connection:"))
+
+
+if __name__ == "__main__":
+    import sys
+
+    app = QtWidgets.QApplication(sys.argv)
+    LoginDialog = QtWidgets.QDialog()
+    ui = Ui_LoginDialog()
+    ui.setupUi(LoginDialog)
+    LoginDialog.show()
+    sys.exit(app.exec_())
+
